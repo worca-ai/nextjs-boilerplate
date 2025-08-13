@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement Letter & Quote</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application uses a single-card layout on a neutral background to focus the user's attention on the document. The structure is linear, mirroring the source document, as this is the most logical flow for a quote (Details -> Services -> Cost -> Acceptance). This design choice prioritizes clarity and professionalism. Key interactions include dynamic cost calculation for immediate feedback and Print/Download PDF buttons for user utility, making the document easy to process and save. -->
+    <!-- Visualization & Content Choices: Report Info: Staffing roles and costs. -> Goal: Compare and Sum costs. -> Viz/Presentation Method: Styled HTML table. -> Interaction: JavaScript dynamically calculates and displays the total cost. -> Justification: A table is the clearest way to present line-item costs. Dynamic calculation prevents manual error and adds a professional touch. -> Library/Method: Vanilla JS for calculation. Report Info: Entire Quote. -> Goal: Provide a portable, official copy. -> Viz/Presentation Method: Buttons. -> Interaction: Print/Download PDF functionality. -> Justification: These are critical utility features for any formal business document, enhancing user experience. -> Library/Method: html2pdf.js library. Report Info: Signature. -> Goal: Capture client agreement digitally. -> Viz/Presentation Method: Canvas drawing area with buttons. -> Interaction: Client draws signature with mouse/touch, confirms, and it is saved to the document. -> Justification: Provides a simple, interactive way to get a digital signature without external services. The canvas content is preserved in the PDF output. -> Library/Method: Vanilla JS for canvas drawing logic. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .printable-area {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+        .signature-line {
+            border-bottom: 1px solid #374151;
+            display: inline-block;
+            width: 250px;
+            margin-top: 2.5rem;
+        }
+        .message-box {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 sm:p-8">
+
+    <div id="quote-document" class="printable-area max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 sm:p-12">
+        <header class="flex flex-col sm:flex-row justify-between items-center sm:items-start pb-8 border-b">
+            <img src="uploaded:worca-logo-transparent-1024x1024.png" alt="Worca Logo" class="h-12 w-auto mb-4 sm:mb-0">
+            <div class="text-center sm:text-right">
+                <h2 class="text-xl font-semibold text-gray-900">Worca, Inc.</h2>
+                <p class="text-gray-600">1631 Electric Ave,</p>
+                <p class="text-gray-600">Venice, CA 90291</p>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 my-8">
+            <div>
+                <h3 class="font-semibold text-gray-500 uppercase tracking-wide">Date</h3>
+                <p class="font-medium text-gray-800">[August 13, 2025]</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-500 uppercase tracking-wide">To</h3>
+                <p class="font-medium text-gray-800">[Client Company Name]</p>
+                <p class="text-gray-600">[Client Contact Person]</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-500 uppercase tracking-wide">From</h3>
+                <p class="font-medium text-gray-800">Steven Lin</p>
+                <p class="text-gray-600">CEO</p>
+            </div>
+        </section>
+
+        <main>
+            <section id="services" class="mb-10">
+                <h2 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">Proposed Services</h2>
+                <div class="intro-text bg-gray-50 p-4 rounded-lg">
+                    <p class="text-gray-700">This section outlines the scope of the staffing services we will provide to assist with your project. We are committed to finding the best talent to meet your needs and ensure your project's success.</p>
+                </div>
+                <ul class="mt-6 space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-blue-600 font-bold mr-3 mt-1">&#9679;</span>
+                        <div>
+                            <h4 class="font-semibold">Project:</h4>
+                            <p class="text-gray-700">[Project Name, e.g., "Phoenix Initiative"]</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-600 font-bold mr-3 mt-1">&#9679;</span>
+                        <div>
+                            <h4 class="font-semibold">Services:</h4>
+                            <p class="text-gray-700">Staffing and placement for software development team.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-600 font-bold mr-3 mt-1">&#9679;</span>
+                        <div>
+                            <h4 class="font-semibold">Key Deliverables:</h4>
+                            <p class="text-gray-700">Placement of qualified candidates for the roles specified below within the agreed-upon timeframe.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="compensation" class="mb-10">
+                <h2 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">Compensation</h2>
+                 <div class="intro-text bg-gray-50 p-4 rounded-lg">
+                    <p class="text-gray-700">The following table details the compensation structure for the proposed staffing services. Costs are based on the number of hires for each specified role.</p>
+                </div>
+                <div class="mt-6 overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Job Title</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Number of Hires</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Total Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quote-table-body" class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-800">Senior Software Engineer</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-gray-600">2</td>
+                                <td class="cost-cell px-6 py-4 whitespace-nowrap text-right text-gray-600" data-cost="30000">$30,000.00</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-800">UX/UI Designer</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-gray-600">1</td>
+                                <td class="cost-cell px-6 py-4 whitespace-nowrap text-right text-gray-600" data-cost="12000">$12,000.00</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-800">QA Automation Engineer</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-gray-600">1</td>
+                                <td class="cost-cell px-6 py-4 whitespace-nowrap text-right text-gray-600" data-cost="14500">$14,500.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-100">
+                                <td colspan="2" class="px-6 py-4 text-right font-bold text-gray-800 text-lg">Total Quote</td>
+                                <td id="total-cost" class="px-6 py-4 text-right font-bold text-gray-900 text-lg">$0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="mt-6">
+                    <h4 class="font-semibold">Payment Terms:</h4>
+                    <p class="text-gray-700">Invoiced upon successful placement of each candidate, due within 30 days.</p>
+                </div>
+            </section>
+
+            <section id="acceptance" class="mt-12 pt-8 border-t-2 border-dashed">
+                 <div class="intro-text bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">Acceptance of Quote</h2>
+                    <p class="text-gray-700">By signing below, you agree to the services and compensation outlined in this engagement letter. This letter, along with the full terms and conditions found at <a href="#" class="text-blue-600 font-semibold hover:underline">[Link to Full Terms & Conditions]</a>, constitutes the entire agreement between the parties.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+                    <div>
+                        <h3 class="font-bold text-gray-900">[Client Company Name]</h3>
+                        <div class="mt-4">
+                            <div class="signature-line"></div>
+                            <p class="text-sm text-gray-600 mt-2">Signature</p>
+                            <p class="text-sm text-gray-600 mt-6">Name: _________________________</p>
+                            <p class="text-sm text-gray-600 mt-2">Title: __________________________</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900">Worca, Inc.</h3>
+                        <div class="signature-line"></div>
+                        <p class="text-sm text-gray-600 mt-2">Signature</p>
+                         <div class="mt-4">
+                            <p class="text-sm text-gray-600">Name: Steven Lin</p>
+                            <p class="text-sm text-gray-600 mt-2">Title: CEO</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="no-print max-w-4xl mx-auto mt-8 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
+        <button id="print-btn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors">
+            Print
+        </button>
+        <button id="download-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+            Download as PDF
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function calculateTotal() {
+                const costCells = document.querySelectorAll('.cost-cell');
+                let total = 0;
+                costCells.forEach(cell => {
+                    total += parseFloat(cell.dataset.cost) || 0;
+                });
+                const totalCostElement = document.getElementById('total-cost');
+                totalCostElement.textContent = '$' + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            calculateTotal();
+
+            const printBtn = document.getElementById('print-btn');
+            printBtn.addEventListener('click', function() {
+                window.print();
+            });
+
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', function() {
+                const element = document.getElementById('quote-document');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'Engagement_Letter_Quote.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                html2pdf().set(opt).from(element).save();
+            });
+        });
+    </script>
+</body>
+</html>
